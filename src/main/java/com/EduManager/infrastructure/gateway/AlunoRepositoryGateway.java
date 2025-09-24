@@ -1,0 +1,27 @@
+package com.EduManager.infrastructure.gateway;
+
+import com.EduManager.core.entities.Aluno;
+import com.EduManager.core.gateway.AlunoGateway;
+import com.EduManager.infrastructure.mapper.AlunoEntityMapper;
+import com.EduManager.infrastructure.persistence.AlunoEntity;
+import com.EduManager.infrastructure.persistence.AlunoRepository;
+
+public class AlunoRepositoryGateway implements AlunoGateway {
+
+    private final AlunoRepository alunoRepository;
+    private final AlunoEntityMapper alunoEntityMapper;
+
+    public AlunoRepositoryGateway(AlunoRepository alunoRepository, AlunoEntityMapper alunoEntityMapper) {
+        this.alunoRepository = alunoRepository;
+        this.alunoEntityMapper = alunoEntityMapper;
+    }
+
+    @Override
+    public Aluno cadastrarAluno(Aluno aluno)
+    {
+        AlunoEntity alunoEntity = alunoEntityMapper.map(aluno);
+        AlunoEntity alunoSalvo = alunoRepository.save(alunoEntity);
+        return alunoEntityMapper.map(alunoSalvo);
+    }
+
+}
