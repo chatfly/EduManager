@@ -7,6 +7,7 @@ import com.EduManager.infrastructure.persistence.AlunoEntity;
 import com.EduManager.infrastructure.persistence.AlunoRepository;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class AlunoRepositoryGateway implements AlunoGateway {
@@ -33,4 +34,15 @@ public class AlunoRepositoryGateway implements AlunoGateway {
         return alunos.stream().map(alunoEntityMapper::map).collect(Collectors.toList());
     }
 
+    @Override
+    public Aluno atualizarAluno(Long id, Aluno aluno) {
+        Optional<AlunoEntity> alunoExistente = alunoRepository.findById(id);
+        if(alunoExistente.isPresent()) {
+            AlunoEntity alunoAtualizado = alunoEntityMapper.map(aluno);
+            alunoAtualizado.setId(id);
+            AlunoEntity alunoSalvo = alunoRepository.save(alunoAtualizado);
+            return alunoEntityMapper.map(alunoSalvo);
+        }
+        return null;
+    }
 }

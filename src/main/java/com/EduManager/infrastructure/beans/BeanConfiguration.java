@@ -1,10 +1,7 @@
 package com.EduManager.infrastructure.beans;
 
 import com.EduManager.core.gateway.AlunoGateway;
-import com.EduManager.core.usecases.BuscarAlunosUsecase;
-import com.EduManager.core.usecases.BuscarAlunosUsecaseImpl;
-import com.EduManager.core.usecases.CadastrarAlunoUsecase;
-import com.EduManager.core.usecases.CadastrarAlunoUsecaseImpl;
+import com.EduManager.core.usecases.*;
 import com.EduManager.infrastructure.gateway.AlunoRepositoryGateway;
 import com.EduManager.infrastructure.mapper.AlunoEntityMapper;
 import com.EduManager.infrastructure.persistence.AlunoRepository;
@@ -27,6 +24,11 @@ public class BeanConfiguration {
     @Bean
     public BuscarAlunosUsecase buscarAlunosUsecase(AlunoGateway alunoGateway) {
         return new BuscarAlunosUsecaseImpl(alunoGateway);
+    }
+
+    @Bean
+    public AtualizarAlunoUsecase atualizarAlunoUsecase(AlunoGateway alunoGateway) {
+        return new AtualizarAlunoUsecaseImpl(alunoGateway);
     }
 
 }
