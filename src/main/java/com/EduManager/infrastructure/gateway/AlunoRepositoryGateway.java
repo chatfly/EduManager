@@ -6,6 +6,9 @@ import com.EduManager.infrastructure.mapper.AlunoEntityMapper;
 import com.EduManager.infrastructure.persistence.AlunoEntity;
 import com.EduManager.infrastructure.persistence.AlunoRepository;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class AlunoRepositoryGateway implements AlunoGateway {
 
     private final AlunoRepository alunoRepository;
@@ -22,6 +25,12 @@ public class AlunoRepositoryGateway implements AlunoGateway {
         AlunoEntity alunoEntity = alunoEntityMapper.map(aluno);
         AlunoEntity alunoSalvo = alunoRepository.save(alunoEntity);
         return alunoEntityMapper.map(alunoSalvo);
+    }
+
+    @Override
+    public List<Aluno> buscarAlunos() {
+        List<AlunoEntity> alunos = alunoRepository.findAll();
+        return alunos.stream().map(alunoEntityMapper::map).collect(Collectors.toList());
     }
 
 }
